@@ -1,0 +1,464 @@
+<link rel="stylesheet" type="text/css" href="extjs/resources/css/ext-all.css">
+    <script type="text/javascript" src="extjs/ext-debug.js"></script>
+<script type="text/javascript" >
+Ext.require([
+    'Ext.grid.*',
+    'Ext.data.*'
+]);
+
+Ext.onReady(function(){
+
+	// the store that contain the data for multi level grid
+	/*
+	* created by : Kanaan Abdulbaqi.
+	* description : grid multi row expander by using extjs.
+	*
+	*
+	*
+	*
+	*
+	*
+	*/
+	var nyStore = Ext.create('Ext.data.Store', {
+		fields:['id', 'name', 'phone', 'orders'],
+		data:[{
+			"id": 1,
+			"name": "Bread Barn",
+			"phone": "8436-365-256",
+			"orders": [{
+				"id": '11',
+				"date": "2010-08-13",
+				"customerId": 1,
+				'a' : [
+					{
+						'id' : '111' , 
+						'a' : 'kanaan', 
+						'b':'Palestine',
+						'd' : [
+							{
+								'id' : '1111' , 
+								'a' : 'kanaan', 
+								'b':'Palestine'
+							}, {
+								'id' : '1112' , 
+								'a' : 'kanaan', 
+								'b':'Palestine'
+							}
+						]
+					},{
+						'id' : '112',
+						'a' : 'patric',
+						'b' : 'USA',
+						'd' : [
+							{
+								'id' : '1121' , 
+								'a' : 'kanaan', 
+								'b':'Palestine'
+							}, {
+								'id' : '1122' , 
+								'a' : 'kanaan', 
+								'b':'Palestine'
+							}
+						]
+					}
+				]
+			}, {
+				"id": '12',
+				"date": "2010-07-14",
+				"customerId": 1,
+				'a' : [
+					{
+						'id' : '121' , 
+						'a' : 'kanaan', 
+						'b':'Palestine',
+						'd' : [
+							{
+								'id' : '1211' , 
+								'a' : 'kanaan', 
+								'b':'Palestine'
+							}, {
+								'id' : '1212' , 
+								'a' : 'kanaan', 
+								'b':'Palestine'
+							}
+						]
+					},{
+						'id' : '122',
+						'a' : 'patric',
+						'b' : 'USA',
+						'd' : [
+							{
+								'id' : '1221' , 
+								'a' : 'kanaan', 
+								'b':'Palestine'
+							}, {
+								'id' : '1222' , 
+								'a' : 'kanaan', 
+								'b':'Palestine'
+							}
+						]
+					}
+				]
+			}]
+		}, {
+			"id": 2,
+			"name": "Icecream Island",
+			"phone": "8452-389-719",
+			"orders": [{
+				"id": '23',
+				"date": "2010-01-22",
+				"customerId": 2,
+				'a' : [
+					{
+						'id' : '231' , 
+						'a' : 'kanaan', 
+						'b':'Palestine',
+						'd' : [
+							{
+								'id' : '2311' , 
+								'a' : 'kanaan', 
+								'b':'Palestine'
+							}, {
+								'id' : '2312' , 
+								'a' : 'kanaan', 
+								'b':'Palestine'
+							}
+						]
+					}, {
+						'id' : '232',
+						'a' : 'patric',
+						'b' : 'USA',
+						'd' : [
+							{
+								'id' : '2321' , 
+								'a' : 'kanaan', 
+								'b':'Palestine'
+							}, {
+								'id' : '2322' , 
+								'a' : 'kanaan', 
+								'b':'Palestine'
+							}
+						]
+					}
+				]
+			}, {
+				"id": '24',
+				"date": "2010-11-06",
+				"customerId": 2,
+				'a' : [
+					{
+						'id' : '241' , 
+						'a' : 'kanaan', 
+						'b':'Palestine',
+						'd' : [
+							{
+								'id' : '2411' , 
+								'a' : 'kanaan', 
+								'b':'Palestine'
+							}, {
+								'id' : '2412' , 
+								'a' : 'kanaan', 
+								'b':'Palestine'
+							}
+						]
+					},{
+						'id' : '242',
+						'a' : 'patric',
+						'b' : 'USA',
+						'd' : [
+							{
+								'id' : '2421' , 
+								'a' : 'kanaan', 
+								'b':'Palestine'
+							}, {
+								'id' : '2422' , 
+								'a' : 'kanaan', 
+								'b':'Palestine'
+							}
+						]
+					}
+				]
+			}]
+		}, {
+			"id": 3,
+			"name": "Pizza Palace",
+			"phone": "9378-255-743",
+			"orders": [{
+				"id": '35',
+				"date": "2010-12-29",
+				"customerId": 3,
+				'a' : [
+					{
+						'id' : '351' , 
+						'a' : 'kanaan', 
+						'b':'Palestine',
+						'd' : [
+							{
+								'id' : '3511' , 
+								'a' : 'kanaan', 
+								'b':'Palestine'
+							}, {
+								'id' : '3512' , 
+								'a' : 'kanaan', 
+								'b':'Palestine'
+							}
+						]
+					},{
+						'id' : '352',
+						'a' : 'patric',
+						'b' : 'USA',
+						'd' : [
+							{
+								'id' : '3521' , 
+								'a' : 'kanaan', 
+								'b':'Palestine'
+							}, {
+								'id' : '3522' , 
+								'a' : 'kanaan', 
+								'b':'Palestine'
+							}
+						]
+					}
+				]
+			}, {
+				"id": '36',
+				"date": "2010-03-03",
+				"customerId": 3
+			}]
+		}],
+		proxy: {
+			type: 'memory',
+			reader: {
+				type: 'json'
+			}
+		}
+	});
+	
+
+    Ext.QuickTips.init();
+	//the root grid will contains all expandable rows
+    var rootGrid = Ext.create('Ext.grid.Panel', {
+        store: nyStore,
+        columns: [{
+                text: 'Id',
+                dataIndex: 'id'
+            },{
+                text: 'Name',
+                dataIndex: 'name',
+                flex: 1
+            }, {
+                width: 140,
+                text: 'Phone',
+                dataIndex: 'phone'
+            }],
+        columnLines: true,
+		layout: {
+			type: 'anchor'
+			,align: 'stretch'
+		},
+		anchor : '100%',
+		autoScroll : true,
+        collapsible: true,
+        animCollapse: false,
+		width: 800,
+        height: 600,
+		listeners: {
+			viewready : function( view, eOpts ){
+				view.parentGrid && view.parentGrid.doLayout();
+			},
+			afterrender: function (grid) {
+				var me = this;
+				me.getView().on('expandbody',function (rowNode, record, expandbody) {
+						var targetId = 'CallsGridRow-' + record.get('id');
+						if (Ext.getCmp(targetId + "_grid") == null) {
+							var subStore = Ext.create('Ext.data.Store', {
+								fields:['id', 'date', 'customerId'],
+								data: record.data.orders,
+								proxy: {
+									type: 'memory',
+									reader: {
+										type: 'json'
+									}
+								}
+							});
+							var subgrid = Ext.create('Ext.grid.Panel', {
+								forceFit: true,
+								flex : 1,
+								autoScroll : true,
+								parentGrid : grid,
+								parentId : record.get('id'),
+								columnLines: true,
+								header : false,
+								renderTo: targetId,
+								id: targetId + "_grid",
+								store: subStore,
+								columns: [{
+									flex : 1,
+									text: 'Order Id',
+									dataIndex: 'id',
+									width: 100
+								},{
+									flex : 1,
+									width: 120,
+									text: 'Date',
+									dataIndex: 'date',
+									formatter: 'date("Y-m-d")'
+								}],
+								plugins: [{
+									  ptype:                'rowexpander',
+									  rowBodyTpl:            [
+										'<div id="level2CallsGridRow-{id}" ></div>'
+									  ]
+								   }],
+								collapsible: true,
+								animCollapse: false,
+								iconCls: 'icon-grid',
+								listeners: {
+									viewready : function( view, eOpts ){
+										view.parentGrid && view.parentGrid.doLayout();
+									},
+									afterrender: function (grid) {
+										var me = this;
+										me.getView().on('expandbody',function (rowNode, record, expandbody) {
+												var targetId = 'level2CallsGridRow-' + record.get('id');
+												if (Ext.getCmp(targetId + "_grid") == null) {
+													var subStore = Ext.create('Ext.data.Store', {
+														fields:['a', 'b'],
+														data: record.raw.a,
+														proxy: {
+															type: 'memory',
+															reader: {
+																type: 'json'
+															}
+														}
+													});
+													var subgrid = Ext.create('Ext.grid.Panel', {
+														forceFit: true,
+														columnLines: true,
+														flex : 1,
+														header : false,
+														autoScroll : true,
+														parentId : record.get('id'),
+														parentGrid : grid,
+														renderTo: targetId,
+														id: targetId + "_grid",
+														store: subStore,
+														columns: [{
+															flex : 1,
+															text: 'id',
+															dataIndex: 'id'
+														},{
+															flex : 1,
+															text: 'a',
+															dataIndex: 'a',
+															width: 100
+														},{
+															flex : 1,
+															text: 'b',
+															dataIndex: 'b'
+														}],
+														plugins: [{
+															  ptype: 'rowexpander',
+															  rowBodyTpl: [
+																'<div id="level3-{id}" ></div>'
+															  ]
+														   }],
+														collapsible: true,
+														animCollapse: false,
+														iconCls: 'icon-grid',
+														listeners: {
+															viewready : function( view, eOpts ){
+																view.parentGrid && view.parentGrid.doLayout();
+															},
+															afterrender: function (grid) {
+																var me = this;
+																me.getView().on('expandbody',function (rowNode, record, expandbody) {
+																	var targetId = 'level3-'+ record.get('id');
+																	if (Ext.getCmp(targetId + "_grid") == null) {
+																		var subStore = Ext.create('Ext.data.Store', {
+																			fields:['a', 'b'],
+																			data: record.raw.d,
+																			proxy: {
+																				type: 'memory',
+																				reader: {
+																					type: 'json'
+																				}
+																			}
+																		});
+																		
+																		var subgrid = Ext.create('Ext.grid.Panel', {
+																			forceFit: true,
+																			columnLines: true,
+																			flex : 1,
+																			header : false,
+																			autoScroll : true,
+																			parentId : record.get('id'),
+																			parentGrid : grid,
+																			renderTo: targetId,
+																			id: targetId + "_grid",
+																			store: subStore,
+																			columns: [{
+																				flex : 1,
+																				text: 'id',
+																				dataIndex: 'id'
+																			},{
+																				flex : 1,
+																				text: 'a',
+																				dataIndex: 'a',
+																				width: 100
+																			},{
+																				flex : 1,
+																				text: 'b',
+																				dataIndex: 'b'
+																			}],
+																			collapsible: true,
+																			animCollapse: false,
+																			iconCls: 'icon-grid',
+																			listeners: {
+																				viewready : function( view, eOpts ){
+																					view.parentGrid && view.parentGrid.doLayout();
+																					view.parentGrid && view.parentGrid.parentGrid && view.parentGrid.parentGrid.doLayout();
+																				}
+																			}
+																		});
+																	}
+																});
+																
+															}
+														}
+													});
+												}
+											});
+									}
+								}
+							});
+						}
+					});
+			}
+        },
+        plugins: [{
+			  ptype: 'rowexpander',
+			  rowBodyTpl:[
+				'<div id="CallsGridRow-{id}" ></div>'
+			  ]
+		   }],
+        collapsible: true,
+        animCollapse: false,
+        title: 'Expander Rows in a Collapsible Grid with lockable columns',
+        iconCls: 'icon-grid',
+        margin: '0 0 20 0',
+        renderTo: Ext.getBody()
+    });
+
+  
+});
+
+
+
+
+
+
+
+
+
+</script>
