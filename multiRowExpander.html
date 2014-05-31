@@ -1,5 +1,10 @@
-<link rel="stylesheet" type="text/css" href="extjs/resources/css/ext-all.css">
-    <script type="text/javascript" src="extjs/ext-debug.js"></script>
+<html>
+<head>
+<title>multi row expanding</title>
+	<link rel="stylesheet" type="text/css" href="extjs/resources/css/ext-all-neptune.css">
+	<link rel="stylesheet" type="text/css" href="extjs/resources/css/ext-custom.css">
+	<script type="text/javascript" src="extjs/ext-all.js"></script>
+	<script type="text/javascript" src="extjs/ext-theme-neptune.js"></script>
 <script type="text/javascript" >
 Ext.require([
     'Ext.grid.*',
@@ -7,18 +12,6 @@ Ext.require([
 ]);
 
 Ext.onReady(function(){
-
-	// the store that contain the data for multi level grid
-	/*
-	* created by : Kanaan Abdulbaqi.
-	* description : grid multi row expander by using extjs.
-	*
-	*
-	*
-	*
-	*
-	*
-	*/
 	var nyStore = Ext.create('Ext.data.Store', {
 		fields:['id', 'name', 'phone', 'orders'],
 		data:[{
@@ -223,7 +216,40 @@ Ext.onReady(function(){
 			}, {
 				"id": '36',
 				"date": "2010-03-03",
-				"customerId": 3
+				"customerId": 3,
+				'a' : [
+					{
+						'id' : '361' , 
+						'a' : 'kanaan', 
+						'b':'Palestine',
+						'd' : [
+							{
+								'id' : '3611' , 
+								'a' : 'kanaan', 
+								'b':'Palestine'
+							}, {
+								'id' : '3612' , 
+								'a' : 'kanaan', 
+								'b':'Palestine'
+							}
+						]
+					},{
+						'id' : '362',
+						'a' : 'patric',
+						'b' : 'USA',
+						'd' : [
+							{
+								'id' : '3621' , 
+								'a' : 'kanaan', 
+								'b':'Palestine'
+							}, {
+								'id' : '3622' , 
+								'a' : 'kanaan', 
+								'b':'Palestine'
+							}
+						]
+					}
+				]
 			}]
 		}],
 		proxy: {
@@ -236,7 +262,6 @@ Ext.onReady(function(){
 	
 
     Ext.QuickTips.init();
-	//the root grid will contains all expandable rows
     var rootGrid = Ext.create('Ext.grid.Panel', {
         store: nyStore,
         columns: [{
@@ -253,15 +278,13 @@ Ext.onReady(function(){
             }],
         columnLines: true,
 		layout: {
-			type: 'anchor'
+			type: 'fit'
 			,align: 'stretch'
 		},
-		anchor : '100%',
 		autoScroll : true,
         collapsible: true,
         animCollapse: false,
-		width: 800,
-        height: 600,
+		flex : 1,
 		listeners: {
 			viewready : function( view, eOpts ){
 				view.parentGrid && view.parentGrid.doLayout();
@@ -307,7 +330,7 @@ Ext.onReady(function(){
 								plugins: [{
 									  ptype:                'rowexpander',
 									  rowBodyTpl:            [
-										'<div id="level2CallsGridRow-{id}" ></div>'
+										'<div id="level2CallsGridRow-{id}" style = "overflow : auto"></div>'
 									  ]
 								   }],
 								collapsible: true,
@@ -360,7 +383,7 @@ Ext.onReady(function(){
 														plugins: [{
 															  ptype: 'rowexpander',
 															  rowBodyTpl: [
-																'<div id="level3-{id}" ></div>'
+																'<div id="level3-{id}" style = "overflow : auto"></div>'
 															  ]
 														   }],
 														collapsible: true,
@@ -439,26 +462,25 @@ Ext.onReady(function(){
         plugins: [{
 			  ptype: 'rowexpander',
 			  rowBodyTpl:[
-				'<div id="CallsGridRow-{id}" ></div>'
+				'<div id="CallsGridRow-{id}" style = "overflow : auto"></div>'
 			  ]
 		   }],
         collapsible: true,
         animCollapse: false,
         title: 'Expander Rows in a Collapsible Grid with lockable columns',
         iconCls: 'icon-grid',
-        margin: '0 0 20 0',
-        renderTo: Ext.getBody()
+        margin: '0 0 20 0'
     });
-
+	
+	Ext.create('Ext.Viewport', {
+		layout: 'fit',
+		items: [rootGrid],
+        renderTo: Ext.getBody()
+	});
   
 });
-
-
-
-
-
-
-
-
-
 </script>
+</head>
+<body>
+</body>
+</html>
